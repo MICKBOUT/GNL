@@ -6,7 +6,7 @@
 /*   By: mboutte <mboutte@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 09:47:47 by mboutte           #+#    #+#             */
-/*   Updated: 2025/11/18 16:49:18 by mboutte          ###   ########.fr       */
+/*   Updated: 2025/11/18 22:30:21 by mboutte          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ int	main(int argc, char **argv)
 		return (1);
 	i = 0;
 	fd = -1;
-
 	line = get_next_line(fd);
 	return (0);
 }
