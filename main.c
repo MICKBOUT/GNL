@@ -1,33 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mboutte <mboutte@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/17 09:52:36 by mboutte           #+#    #+#             */
-/*   Updated: 2025/11/19 13:42:26 by mboutte          ###   ########.fr       */
+/*   Created: 2025/11/19 13:20:40 by mboutte           #+#    #+#             */
+/*   Updated: 2025/11/19 13:42:42 by mboutte          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include "get_next_line.h"
 
-# include <stdlib.h>
-# include <fcntl.h>
-# include <unistd.h>
-# include <stdio.h>
+int	main(int argc, char **argv)
+{
+	int		fd;
+	char	*line;
+	int		i;
 
-char	*get_next_line(int fd);
-int		ft_strlen(char *str);
-
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 1024
-# endif
-
-# if BUFFER_SIZE < 0
-#  undef BUFFER_SIZE
-#  define BUFFER_SIZE 0
-# endif
-
-#endif
+	if (argc != 3)
+		return (1);
+	i = 0;
+	fd = open(argv[1], O_RDONLY);
+	if (fd < 0)
+		return (1);
+	line = get_next_line(fd);
+	while ((i < atoi(argv[2])))
+	{
+		printf("%s", line);
+		free(line);
+		i++;
+	}
+	close(fd);
+	return (0);
+}
