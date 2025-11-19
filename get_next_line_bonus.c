@@ -6,7 +6,7 @@
 /*   By: mboutte <mboutte@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 09:51:37 by mboutte           #+#    #+#             */
-/*   Updated: 2025/11/19 15:01:08 by mboutte          ###   ########.fr       */
+/*   Updated: 2025/11/19 22:02:24 by mboutte          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ char	*get_next_line(int fd)
 	{
 		buffer[fd][byte_read] = '\0';
 		output = ft_add_left(output, buffer[fd]);
-		if (ft_find(output) > -1)
+		if (output && ft_find(output) > -1)
 			return (output);
 		byte_read = read(fd, buffer[fd], BUFFER_SIZE);
 	}

@@ -6,7 +6,7 @@
 /*   By: mboutte <mboutte@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 09:51:37 by mboutte           #+#    #+#             */
-/*   Updated: 2025/11/19 14:25:42 by mboutte          ###   ########.fr       */
+/*   Updated: 2025/11/19 21:53:08 by mboutte          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	ft_find(char *buffer)
 	int	i;
 
 	i = 0;
+	if (!buffer)
+		return (-1);
 	while (buffer[i])
 	{
 		if (buffer[i] == '\n')
@@ -31,10 +33,13 @@ void	ft_remove_start(char *buffer, int to_remove)
 	int	i;
 
 	i = 0;
-	while (buffer[i + to_remove])
+	if (to_remove < ft_strlen(buffer))
 	{
-		buffer[i] = buffer[i + to_remove];
-		i++;
+		while (buffer[i + to_remove])
+		{
+			buffer[i] = buffer[i + to_remove];
+			i++;
+		}
 	}
 	buffer[i] = '\0';
 }
@@ -75,7 +80,9 @@ char	*ft_add_left(char *output, char *buffer)
 	size = ft_find(buffer);
 	if (size == -1)
 		size = ft_strlen(buffer);
-	new = malloc(sizeof(char) * (ft_strlen(output) + size + 2));
+	if (buffer[size] == '\n')
+		size++;
+	new = malloc(sizeof(char) * (ft_strlen(output) + size + 1));
 	if (!new)
 		return (NULL);
 	return (ft_creat_string(output, buffer, new));
@@ -99,13 +106,13 @@ char	*get_next_line(int fd)
 	{
 		buffer[byte_read] = '\0';
 		output = ft_add_left(output, buffer);
-		if (ft_find(output) > -1)
+		if (output && ft_find(output) > -1)
 			return (output);
 		byte_read = read(fd, buffer, BUFFER_SIZE);
 	}
 	if (byte_read == -1 && (output))
 		free(output);
-	if (byte_read == -1)
+	if (byte_read == -1 || !output || output[0] == '\0')
 		return (NULL);
 	return (output);
 }
