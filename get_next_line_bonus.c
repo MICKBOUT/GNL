@@ -6,54 +6,104 @@
 /*   By: mboutte <mboutte@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 09:51:37 by mboutte           #+#    #+#             */
-/*   Updated: 2025/11/18 22:56:31 by mboutte          ###   ########.fr       */
+/*   Updated: 2025/11/19 12:30:39 by mboutte          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 int	ft_find(char *buffer)
 {
-	int i;
+	int	i;
 
-	i = -1;
-	while (buffer[++i])
+	i = 0;
+	while (buffer[i])
+	{
 		if (buffer[i] == '\n')
 			return (i);
+		i++;
+	}
 	return (-1);
 }
+
 void	ft_remove_start(char *buffer, int to_remove)
 {
-	//set the first part of the buffer to buffer + to remove
-	//set the last part of the buffer to '\0'
+	int	i;
+
+	i = 0;
+	while (buffer[i + to_remove])
+	{
+		buffer[i] = buffer[i + to_remove];
+		i++;
+	}
+	buffer[i] = '\0';
 }
 
-char	*ft_add_left(char output, char *buffer, char *left)
+char	*ft_creat_string(char *output, char *buffer, char *new)
 {
-	//add the buffer to the output check if output NULL
-	//ft_remove_start in the buffer
+	int	i;
+	int	j;
+
+	i = 0;
+	if (output)
+	{
+		while (output[i])
+		{
+			new[i] = output[i];
+			i++;
+		}
+		free(output);
+	}
+	j = 0;
+	while (buffer[j] && buffer[j] != '\n')
+	{
+		new[i + j] = buffer[j];
+		j++;
+	}
+	if (buffer[j] == '\n')
+		new[i + j++] = '\n';
+	new[i + j] = '\0';
+	ft_remove_start(buffer, j);
+	return (new);
+}
+
+char	*ft_add_left(char *output, char *buffer)
+{
+	char	*new;
+	int		size;
+
+	size = ft_find(buffer);
+	if (size == -1)
+		size = ft_strlen(buffer);
+	new = malloc(sizeof(char) * (ft_strlen(output) + size + 2));
+	if (!new)
+		return (NULL);
+	return (ft_creat_string(output, buffer, new));
 }
 
 char	*get_next_line(int fd)
 {
 	static char	buffer[16][BUFFER_SIZE + 1];
-	int			byte_read;
 	char		*output;
-	
+	int			byte_read;
+
 	if (fd < 0 || fd > FOPEN_MAX || BUFFER_SIZE <= 0)
 		return (NULL);
 	output = NULL;
-		//if newline in buffer :
-	// return a part of the buffer and cut the part in the buffer
-	//read in the file
+	if (ft_find(buffer[fd]) > -1)
+		return (ft_add_left(output, buffer[fd]));
+	if (buffer[fd][0] != '\0')
+		output = ft_add_left(output, buffer[fd]);
+	byte_read = read(fd, buffer[fd], BUFFER_SIZE);
 	while (byte_read > 0)
 	{
-//		add the buffer up to the end or a new line in the output, and remove the part in the buffer
-//      if newline at the end of the output
-//			return the output
-//      read in the file
+		buffer[fd][byte_read] = '\0';
+		output = ft_add_left(output, buffer[fd]);
+		if (ft_find(output) > -1)
+			return (output);
+		byte_read = read(fd, buffer[fd], BUFFER_SIZE);
 	}
-	// if read == -1
-	// return NULL
+	if (byte_read == -1)
+		return (NULL);
 	return (output);
 }
