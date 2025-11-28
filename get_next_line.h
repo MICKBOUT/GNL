@@ -6,7 +6,7 @@
 /*   By: mboutte <mboutte@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 09:52:36 by mboutte           #+#    #+#             */
-/*   Updated: 2025/11/19 22:15:36 by mboutte          ###   ########.fr       */
+/*   Updated: 2025/11/21 10:24:40 by mboutte          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*get_next_line(int fd);
 int		ft_strlen(char *str);
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 1024
+#  define BUFFER_SIZE 42
 # endif
 
 # if BUFFER_SIZE < 0
