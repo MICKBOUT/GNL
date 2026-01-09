@@ -6,7 +6,7 @@
 /*   By: mboutte <mboutte@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 09:51:37 by mboutte           #+#    #+#             */
-/*   Updated: 2025/11/21 10:20:00 by mboutte          ###   ########.fr       */
+/*   Updated: 2026/01/09 12:53:15 by mboutte          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,25 +117,26 @@ char	*get_next_line(int fd)
 	return (output);
 }
 
-#include <fcntl.h>
-int    main(int argc, char **argv)
-{
-    int        fd;
-    char    *line;
-    int        i;
+// #include <fcntl.h>
 
-    if (argc != 2)
-        return (1);
-    i = 0;
-    fd = open(argv[1], O_RDONLY);
-    if (fd < 0)
-        return (1);
-    while ((line = get_next_line(fd)))
-    {
-        printf("%s", line);
-        free(line);
-        i++;
-    }
-    close(fd);
-    return (0);
-}
+// int	main(int argc, char **argv)
+// {
+// 	int		fd;
+// 	char	*line;
+// 	int		i;
+
+// 	if (argc != 2)
+// 		return (1);
+// 	i = 0;
+// 	fd = open(argv[1], O_RDONLY);
+// 	if (fd < 0)
+// 		return (1);
+// 	while ((line = get_next_line(fd)))
+// 	{
+// 		printf("%s", line);
+// 		free(line);
+// 		i++;
+// 	}
+// 	close(fd);
+// 	return (0);
+// }
